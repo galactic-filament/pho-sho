@@ -1,0 +1,12 @@
+web:
+  image: ihsw/pho-sho
+  command: php -S 0.0.0.0:80 -t web web/index.php
+  ports:
+    - 80:80
+  volumes:
+    - ./app:/srv/app
+test:
+  image: ihsw/pho-sho
+  command: phpunit
+  volumes:
+    - ./app:/srv/app
