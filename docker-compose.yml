@@ -1,12 +1,11 @@
-web:
+base:
   image: ihsw/pho-sho
-  command: php -S 0.0.0.0:80 -t web web/index.php
+web:
+  extends:
+    service: base
   ports:
     - 80:80
-  volumes:
-    - ./app:/srv/app
 test:
-  image: ihsw/pho-sho
+  extends:
+    service: base
   command: phpunit
-  volumes:
-    - ./app:/srv/app
