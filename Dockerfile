@@ -1,5 +1,7 @@
 FROM php
 
+EXPOSE 80
+
 RUN apt-get update -q \
   && apt-get install -yq wget git zlib1g-dev \
   && docker-php-ext-install zip
@@ -9,7 +11,7 @@ RUN wget -P /tmp https://phar.phpunit.de/phpunit.phar \
 RUN curl -sS https://getcomposer.org/installer \
   | php -- --install-dir=/usr/bin --filename=composer
 
-ADD ./app /srv/app
+COPY ./app /srv/app
 WORKDIR /srv/app
 RUN composer install
 
