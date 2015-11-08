@@ -10,5 +10,3 @@ php:
 before_script:
   - cd ./app
   - composer install
-script:
-  - phpunit
