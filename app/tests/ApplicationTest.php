@@ -18,4 +18,12 @@ class ApplicationTest extends WebTestCase
     $this->assertTrue($client->getResponse()->isOk());
     $this->assertEquals('Hello, world!', $client->getResponse()->getContent());
   }
+
+  public function testPing()
+  {
+    $client = $this->createClient();
+    $crawler = $client->request('GET', '/ping');
+    $this->assertTrue($client->getResponse()->isOk());
+    $this->assertEquals('Pong', $client->getResponse()->getContent());
+  }
 }

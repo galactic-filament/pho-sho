@@ -11,6 +11,9 @@ class HelloControllerProvider implements ControllerProviderInterface
     $controllers->get('/', function (SilexApplication $app) {
       return 'Hello, world!';
     });
+    $controllers->get('/ping', function (SilexApplication $app) {
+      return 'Pong';
+    });
     return $controllers;
   }
 }
