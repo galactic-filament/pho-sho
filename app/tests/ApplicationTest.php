@@ -26,4 +26,19 @@ class ApplicationTest extends WebTestCase
     $this->assertTrue($client->getResponse()->isOk());
     $this->assertEquals('Pong', $client->getResponse()->getContent());
   }
+
+  public function testReflection()
+  {
+    $body = ['greeting' => 'Hello, world!'];
+    $client = $this->createClient();
+    $crawler = $client->request('POST', '/reflection', [], [], [
+      'CONTENT_TYPE' => 'application/json'
+    ], json_encode($body));
+
+    $this->assertTrue($client->getResponse()->isOk());
+
+    $res = json_decode($client->getResponse()->getContent(), true);
+    $this->assertNotEquals($res, null);
+    $this->assertEquals($body['greeting'], $res['greeting']);
+  }
 }
