@@ -1,3 +1,4 @@
 #! /bin/bash
 
-docker build -t ihsw/pho-sho .
+docker build -t ihsw/pho-sho . \
+  && docker build -t ihsw/pho-sho-db ./db

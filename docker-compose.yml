@@ -1,19 +1,36 @@
+db:
+  image: ihsw/pho-sho-db
+
 base:
   image: ihsw/pho-sho
+test-base:
+  extends:
+    service: base
+  command: phpunit
+
 web-test:
   extends:
     service: base
+  links:
+    - db
+
 web:
   extends:
     service: base
   ports:
     - 80:80
+  links:
+    - db
+
 test:
   extends:
-    service: base
-  command: phpunit
+    service: test-base
+  links:
+    - db
 test-dev:
   extends:
-    service: test
+    service: test-base
   volumes:
     - ./app:/srv/app
+  links:
+    - db

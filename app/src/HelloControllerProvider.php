@@ -18,8 +18,13 @@ class HelloControllerProvider implements ControllerProviderInterface
       $request->attributes->set('request-body', $data);
     });
 
-    // setting up the controllers
+    /**
+     * setting up the controllers
+     */
+    // misc
     $controllers = $app['controllers_factory'];
+
+    // route definitions
     $controllers->get('/', function (SilexApplication $app) {
       return 'Hello, world!';
     });
@@ -32,6 +37,22 @@ class HelloControllerProvider implements ControllerProviderInterface
         return $app->json($request->attributes->get('request-body'));
       }
     );
+    $controllers->post(
+      '/posts',
+      function (SilexApplication $app, Request $request) {
+        $req = $request->attributes->get('request-body');
+
+        $statement = $app['db']->prepare(
+          'INSERT INTO posts (body) VALUES (:body)'
+        );
+        $statement->execute(['body' => $req['body']]);
+
+        return $app->json([
+          'id' => $app['db']->lastInsertId('posts_id_seq')
+        ]);
+      }
+    );
+
     return $controllers;
   }
 }
