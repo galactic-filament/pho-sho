@@ -7,6 +7,9 @@ php:
   - 7
   - hhvm
 
+env:
+  - ENV=travis
 before_script:
+  - psql -f ./db/container-files/docker-entrypoint-initdb.d/db.sql -U postgres
   - cd ./app
   - composer install

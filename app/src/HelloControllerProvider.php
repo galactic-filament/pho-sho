@@ -42,13 +42,13 @@ class HelloControllerProvider implements ControllerProviderInterface
       function (SilexApplication $app, Request $request) {
         $req = $request->attributes->get('request-body');
 
-        $statement = $app['db']->prepare(
+        $statement = $app->getDb()->prepare(
           'INSERT INTO posts (body) VALUES (:body)'
         );
         $statement->execute(['body' => $req['body']]);
 
         return $app->json([
-          'id' => $app['db']->lastInsertId('posts_id_seq')
+          'id' => $app->getDb()->lastInsertId('posts_id_seq')
         ]);
       }
     );

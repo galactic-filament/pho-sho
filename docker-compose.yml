@@ -6,7 +6,7 @@ base:
 test-base:
   extends:
     service: base
-  command: phpunit
+  command: ./bin/run-tests
 
 web-test:
   extends:

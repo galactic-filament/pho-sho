@@ -4,7 +4,7 @@ EXPOSE 80
 
 # php
 RUN apt-get update -q \
-  && apt-get install -yq wget git zlib1g-dev libpq-dev \
+  && apt-get install -yq wget git zlib1g-dev libpq-dev netcat \
   && docker-php-ext-install zip pdo_pgsql
 
 # phpunit

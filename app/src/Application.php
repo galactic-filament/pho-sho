@@ -20,14 +20,29 @@ class Application extends SilexApplication
   private function loadDatabase()
   {
     $this->register(new DoctrineServiceProvider(), [
-      'db.options' => [
-        'driver' => 'pdo_pgsql',
-        'host' => 'db',
-        'dbname' => 'postgres',
-        'user' => 'postgres',
-        'password' => ''
+      'dbs.options' => [
+        'travis' => [
+          'driver' => 'pdo_pgsql',
+          'host' => 'localhost',
+          'dbname' => 'postgres',
+          'user' => 'postgres',
+          'password' => ''
+        ],
+        'local' => [
+          'driver' => 'pdo_pgsql',
+          'host' => 'db',
+          'dbname' => 'postgres',
+          'user' => 'postgres',
+          'password' => ''
+        ]
       ]
     ]);
     return $this;
+  }
+
+  public function getDb()
+  {
+    $key = $_SERVER['ENV'] === 'travis' ? 'travis' : 'local';
+    return $this['dbs'][$key];
   }
 }
