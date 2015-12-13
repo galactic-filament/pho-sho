@@ -9,6 +9,8 @@ php:
 matrix:
   allow_failures:
     - php: hhvm
+services:
+  - postgresql
 
 env:
   - ENV=travis
