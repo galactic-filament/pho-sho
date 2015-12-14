@@ -3,6 +3,8 @@ db:
 
 base:
   image: ihsw/pho-sho
+  environment:
+    - ENV=local
 test-base:
   extends:
     service: base
