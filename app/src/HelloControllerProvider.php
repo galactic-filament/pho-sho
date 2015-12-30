@@ -48,7 +48,7 @@ class HelloControllerProvider implements ControllerProviderInterface
         $statement->execute(['body' => $req['body']]);
 
         return $app->json([
-          'id' => $app->getDb()->lastInsertId('posts_id_seq')
+          'id' => (int) $app->getDb()->lastInsertId('posts_id_seq')
         ]);
       }
     );

@@ -69,6 +69,6 @@ class ApplicationTest extends WebTestCase
     $body = ['body' => 'Hello, world!'];
     list($client, $crawler, $res) = $this->_testJson('POST', '/posts', $body);
 
-    $this->assertTrue(is_numeric($res['id']));
+    $this->assertTrue(is_int($res['id']));
   }
 }
