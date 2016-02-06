@@ -2,10 +2,13 @@
 
 use Silex\Application as SilexApplication,
   Silex\Provider\DoctrineServiceProvider;
-use Ihsw\HelloControllerProvider;
+use Ihsw\HelloControllerProvider,
+  Ihsw\Db;
 
 class Application extends SilexApplication
 {
+  private $db;
+
   public function loadAll()
   {
     return $this->loadRoutes()->loadDatabase();
@@ -19,9 +22,8 @@ class Application extends SilexApplication
 
   private function loadDatabase()
   {
-    $this->register(new DoctrineServiceProvider(), [
-      'dbs.options' => [
-        'travis' => [
+    $this->db = new Db([
+      'travis' => [
           'driver' => 'pdo_pgsql',
           'host' => 'localhost',
           'dbname' => 'postgres',
@@ -35,14 +37,12 @@ class Application extends SilexApplication
           'user' => 'postgres',
           'password' => ''
         ]
-      ]
     ]);
     return $this;
   }
 
   public function getDb()
   {
-    $key = $_SERVER['ENV'] === 'travis' ? 'travis' : 'local';
-    return $this['dbs'][$key];
+    return $this->db;
   }
 }

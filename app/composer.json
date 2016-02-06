@@ -7,13 +7,14 @@
         }
     ],
     "autoload": {
-        "psr-4": {
-            "Ihsw\\": "src"
-        }
+        "psr-4": { "Ihsw\\": "src" },
+        "psr-0": { "IhswEntity\\": "entity-src" }
     },
     "require": {
         "silex/silex": "^1.3",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "doctrine/orm": "^2.5",
+        "symfony/yaml": "^3.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^2.7",

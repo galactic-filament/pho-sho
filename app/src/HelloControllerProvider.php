@@ -1,8 +1,11 @@
 <?php namespace Ihsw;
 
-use Silex\Application as SilexApplication;
-use Silex\ControllerProviderInterface;
+use Silex\Application as SilexApplication,
+  Silex\ControllerProviderInterface,
+  Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Ihsw\Application;
+use IhswEntity\Post;
 
 class HelloControllerProvider implements ControllerProviderInterface
 {
@@ -25,30 +28,33 @@ class HelloControllerProvider implements ControllerProviderInterface
     $controllers = $app['controllers_factory'];
 
     // route definitions
-    $controllers->get('/', function (SilexApplication $app) {
+    $controllers->get('/', function (Application $app) {
       return 'Hello, world!';
     });
-    $controllers->get('/ping', function (SilexApplication $app) {
+    $controllers->get('/ping', function (Application $app) {
       return 'Pong';
     });
     $controllers->post(
       '/reflection',
-      function (SilexApplication $app, Request $request) {
+      function (Application $app, Request $request) {
         return $app->json($request->attributes->get('request-body'));
       }
     );
     $controllers->post(
       '/posts',
-      function (SilexApplication $app, Request $request) {
+      function (Application $app, Request $request) {
         $req = $request->attributes->get('request-body');
 
-        $statement = $app->getDb()->prepare(
-          'INSERT INTO posts (body) VALUES (:body)'
-        );
-        $statement->execute(['body' => $req['body']]);
+        // misc
+        $em = $app->getDb()->getEntityManager();
+
+        $post = new Post();
+        $post->setBody($req['body']);
+        $em->persist($post);
+        $em->flush();
 
         return $app->json([
-          'id' => (int) $app->getDb()->lastInsertId('posts_id_seq')
+          'id' => $post->getId()
         ]);
       }
     );
