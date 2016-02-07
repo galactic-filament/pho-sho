@@ -68,7 +68,7 @@ class HelloControllerProvider implements ControllerProviderInterface
 
         return $app->getSerializer()->serialize($post, 'json');
       }
-  );
+    );
 
     return $controllers;
   }
