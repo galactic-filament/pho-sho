@@ -40,6 +40,15 @@ class ApplicationTest extends WebTestCase
     return [$client, $crawler, $res];
   }
 
+  private function _createPost($body)
+  {
+      list(, , $res) = $this->_testJson('POST', '/posts', $body);
+
+      $this->assertTrue(is_int($res['id']));
+
+      return $res;
+  }
+
   public function testHomepage()
   {
     list($client,) = $this->_testRequest('GET', '/');
@@ -55,7 +64,7 @@ class ApplicationTest extends WebTestCase
   public function testReflection()
   {
     $body = ['greeting' => 'Hello, world!'];
-    list($client, , $res) = $this->_testJson(
+    list(, , $res) = $this->_testJson(
       'POST',
       '/reflection',
       $body
@@ -66,9 +75,18 @@ class ApplicationTest extends WebTestCase
 
   public function testPosts()
   {
-    $body = ['body' => 'Hello, world!'];
-    list($client, $crawler, $res) = $this->_testJson('POST', '/posts', $body);
+    $this->_createPost(['body' => 'Hello, world!']);
+  }
 
-    $this->assertTrue(is_int($res['id']));
+  public function testGetPost()
+  {
+    $createBody = ['body' => 'Hello, world!'];
+    $post = $this->_createPost($createBody);
+    list(, , $getBody) = $this->_testJson(
+      'GET',
+      sprintf('/post/%s', $post['id'])
+    );
+
+    $this->assertEquals($createBody['body'], $getBody['body']);
   }
 }
