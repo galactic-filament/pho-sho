@@ -89,4 +89,11 @@ class ApplicationTest extends WebTestCase
 
     $this->assertEquals($createBody['body'], $getBody['body']);
   }
+
+  public function testDeletePost()
+  {
+    $createBody = ['body' => 'Hello, world!'];
+    $post = $this->_createPost($createBody);
+    $this->_testJson('DELETE', sprintf('/post/%s', $post['id']));
+  }
 }
