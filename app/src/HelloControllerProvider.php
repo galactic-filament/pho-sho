@@ -72,7 +72,7 @@ class HelloControllerProvider implements ControllerProviderInterface
         $em = $app->getDb()->getEntityManager();
         $post = $em->getRepository('IhswEntity\Post')->find($id);
         $em->remove($post);
-        $em->flush;
+        $em->flush();
         return $app->json([]);
       }
   );
