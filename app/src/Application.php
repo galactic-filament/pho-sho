@@ -1,7 +1,7 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication,
-  Silex\Provider\DoctrineServiceProvider;
+  Silex\Provider\MonologServiceProvider;
 use Ihsw\HelloControllerProvider,
   Ihsw\Db;
 use JMS\Serializer\SerializerBuilder;
@@ -13,7 +13,10 @@ class Application extends SilexApplication
 
   public function loadAll()
   {
-    return $this->loadRoutes()->loadDatabase()->loadSerializer();
+    return $this->loadRoutes()
+      ->loadDatabase()
+      ->loadSerializer()
+      ->loadLogging();
   }
 
   private function loadRoutes()
@@ -46,6 +49,15 @@ class Application extends SilexApplication
   private function loadSerializer()
   {
     $this->serializer = SerializerBuilder::create()->build();
+    return $this;
+  }
+
+  private function loadLogging()
+  {
+    $this->register(new MonologServiceProvider(), [
+      'monolog.logfile' => 'php://stdout',
+      'monolog.name' => 'pho-sho'
+    ]);
     return $this;
   }
 
