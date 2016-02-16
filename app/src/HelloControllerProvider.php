@@ -13,6 +13,11 @@ class HelloControllerProvider implements ControllerProviderInterface
   {
     // adding json decoding middleware
     $app->before(function(Request $request) {
+      $app->getLogger()->addInfo('Url hit', [
+        'url' => $request->getUri(),
+        'body' => $request->getContent()
+      ]);
+
       if ($request->headers->get('Content-type') !== 'application/json') {
         return;
       }
