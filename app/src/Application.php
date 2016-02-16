@@ -72,7 +72,7 @@ class Application extends SilexApplication
   public function getLogger()
   {
     if (!is_null($this->logger)) {
-      return $logger;
+      return $this->logger;
     }
 
     $logger = new Logger('pho-sho');
