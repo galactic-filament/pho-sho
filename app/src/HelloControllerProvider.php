@@ -16,7 +16,8 @@ class HelloControllerProvider implements ControllerProviderInterface
       $app->getLogger()->addInfo('Url hit', [
         'url' => $request->getUri(),
         'body' => $request->getContent(),
-        'content-type' => $request->headers->get('content-type')
+        'content-type' => $request->headers->get('content-type'),
+        'method' => $request->getMethod()
       ]);
 
       if ($request->headers->get('Content-type') !== 'application/json') {
