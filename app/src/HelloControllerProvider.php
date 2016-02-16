@@ -12,10 +12,11 @@ class HelloControllerProvider implements ControllerProviderInterface
   public function connect(SilexApplication $app)
   {
     // adding json decoding middleware
-    $app->before(function(Request $request) {
+    $app->before(function(Request $request) use($app) {
       $app->getLogger()->addInfo('Url hit', [
         'url' => $request->getUri(),
-        'body' => $request->getContent()
+        'body' => $request->getContent(),
+        'content-type' => $request->headers->get('content-type')
       ]);
 
       if ($request->headers->get('Content-type') !== 'application/json') {
