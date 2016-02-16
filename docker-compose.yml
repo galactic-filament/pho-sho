@@ -8,6 +8,8 @@ base:
 test-base:
   extends:
     service: base
+  environment:
+    - ENV=test
   command: ./bin/run-tests
 
 web-test:

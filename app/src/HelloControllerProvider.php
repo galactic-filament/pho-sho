@@ -21,6 +21,11 @@ class HelloControllerProvider implements ControllerProviderInterface
       $request->attributes->set('request-body', $data);
     });
     $app->before(function(Request $request) use ($app) {
+      $loggingEnvBlacklist = ['test', 'travis'];
+      if (in_array(getenv('ENV'),  $loggingEnvBlacklist)) {
+        return;
+      }
+
       $app->getLogger()->addInfo('Url hit', [
         'url' => $request->getUri(),
         'body' => $request->getContent(),
