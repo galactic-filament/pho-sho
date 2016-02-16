@@ -5,18 +5,18 @@ use Silex\Application as SilexApplication,
 use Ihsw\HelloControllerProvider,
   Ihsw\Db;
 use JMS\Serializer\SerializerBuilder;
+use Monolog\Logger,
+  Monolog\Handler\StreamHandler;
 
 class Application extends SilexApplication
 {
   private $db;
   private $serializer;
+  private $logger;
 
   public function loadAll()
   {
-    return $this->loadRoutes()
-      ->loadDatabase()
-      ->loadSerializer()
-      ->loadLogging();
+    return $this->loadRoutes();
   }
 
   private function loadRoutes()
@@ -25,8 +25,21 @@ class Application extends SilexApplication
     return $this;
   }
 
-  private function loadDatabase()
+  private function loadLogging()
   {
+    $this->register(new MonologServiceProvider(), [
+      'monolog.logfile' => 'php://stdout',
+      'monolog.name' => 'pho-sho'
+    ]);
+    return $this;
+  }
+
+  public function getDb()
+  {
+    if (!is_null($this->db)) {
+      return $this->db;
+    }
+
     $this->db = new Db([
       'travis' => [
           'driver' => 'pdo_pgsql',
@@ -43,31 +56,28 @@ class Application extends SilexApplication
           'password' => ''
         ]
     ]);
-    return $this;
-  }
-
-  private function loadSerializer()
-  {
-    $this->serializer = SerializerBuilder::create()->build();
-    return $this;
-  }
-
-  private function loadLogging()
-  {
-    $this->register(new MonologServiceProvider(), [
-      'monolog.logfile' => 'php://stdout',
-      'monolog.name' => 'pho-sho'
-    ]);
-    return $this;
-  }
-
-  public function getDb()
-  {
     return $this->db;
   }
 
   public function getSerializer()
   {
+    if (!is_null($this->serializer)) {
+      return $this->serializer;
+    }
+
+    $this->serializer = SerializerBuilder::create()->build();
     return $this->serializer;
+  }
+
+  public function getLogger()
+  {
+    if (!is_null($this->logger)) {
+      return $logger;
+    }
+
+    $logger = new Logger('pho-sho');
+    $logger->pushHandler(new StreamHandler('php://stdout', Logger::INFO));
+    $this->logger = $logger;
+    return $this->logger;
   }
 }
