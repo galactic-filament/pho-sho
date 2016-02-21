@@ -1,8 +1,7 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication,
-  Silex\ControllerProviderInterface,
-  Silex\ControllerCollection;
+  Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Ihsw\Application;
 use IhswEntity\Post;
