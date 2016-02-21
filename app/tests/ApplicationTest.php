@@ -96,4 +96,14 @@ class ApplicationTest extends WebTestCase
     $post = $this->_createPost($createBody);
     $this->_testJson('DELETE', sprintf('/post/%s', $post['id']));
   }
+
+  public function testPutPost()
+  {
+    $createBody = ['body' => 'Hello, world!'];
+    $post = $this->_createPost($createBody);
+
+    $requestBody = ['body' => 'Jello, world!'];
+    list(, , $responseBody) = $this->_testJson('PUT', sprintf('/post/%s', $post['id']), $requestBody);
+    $this->assertEquals($requestBody['body'], $responseBody['body']);
+  }
 }

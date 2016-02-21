@@ -89,6 +89,22 @@ class HelloControllerProvider implements ControllerProviderInterface
         return $app->json([]);
       }
     );
+    $controllers->put(
+      '/post/{id}',
+      function (Application $app, Request $request, $id) {
+        $req = $request->attributes->get('request-body');
+
+        // misc
+        $em = $app->getDb()->getEntityManager();
+
+        $post = $em->getRepository('IhswEntity\Post')->find($id);
+        $post->setBody($req['body']);
+        $em->persist($post);
+        $em->flush();
+
+        return $app->getSerializer()->serialize($post, 'json');
+      }
+    );
 
     return $controllers;
   }
