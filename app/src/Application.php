@@ -1,7 +1,6 @@
 <?php namespace Ihsw;
 
-use Silex\Application as SilexApplication,
-  Silex\Provider\MonologServiceProvider;
+use Silex\Application as SilexApplication;
 use Ihsw\HelloControllerProvider,
   Ihsw\Db;
 use JMS\Serializer\SerializerBuilder;
@@ -22,15 +21,6 @@ class Application extends SilexApplication
   private function loadRoutes()
   {
     $this->mount('/', new HelloControllerProvider());
-    return $this;
-  }
-
-  private function loadLogging()
-  {
-    $this->register(new MonologServiceProvider(), [
-      'monolog.logfile' => 'php://stdout',
-      'monolog.name' => 'pho-sho'
-    ]);
     return $this;
   }
 
