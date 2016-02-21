@@ -88,7 +88,7 @@ class HelloControllerProvider implements ControllerProviderInterface
         $em->flush();
         return $app->json([]);
       }
-  );
+    );
 
     return $controllers;
   }
