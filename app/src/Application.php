@@ -44,6 +44,7 @@ class Application extends SilexApplication
     // loading routes
     $this->mount('/', new DefaultControllerProvider());
     $this->mount('/', new PostsControllerProvider());
+
     return $this;
   }
 
