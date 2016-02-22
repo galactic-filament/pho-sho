@@ -1,11 +1,13 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication;
-use Ihsw\HelloControllerProvider,
-  Ihsw\Db;
+use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder;
 use Monolog\Logger,
   Monolog\Handler\StreamHandler;
+use Ihsw\DefaultControllerProvider,
+  Ihsw\PostsControllerProvider,
+  Ihsw\Db;
 
 class Application extends SilexApplication
 {
@@ -13,14 +15,35 @@ class Application extends SilexApplication
   private $serializer;
   private $logger;
 
-  public function loadAll()
+  public function load()
   {
-    return $this->loadRoutes();
-  }
+    // adding middlewares
+    $this->before(function(Request $request) {
+      if ($request->headers->get('Content-type') !== 'application/json') {
+        return;
+      }
 
-  private function loadRoutes()
-  {
-    $this->mount('/', new HelloControllerProvider());
+      $data = json_decode($request->getContent(), true);
+      $request->attributes->set('request-body', $data);
+    });
+    $this->before(function(Request $request) {
+      $loggingEnvBlacklist = ['test', 'travis'];
+      if (in_array(getenv('ENV'),  $loggingEnvBlacklist)) {
+        return;
+      }
+
+      $this->getLogger()->addInfo('Url hit', [
+        'url' => $request->getUri(),
+        'body' => $request->getContent(),
+        'content-type' => $request->headers->get('content-type'),
+        'method' => $request->getMethod()
+      ]);
+    });
+
+
+    // loading routes
+    $this->mount('/', new DefaultControllerProvider());
+    $this->mount('/', new PostsControllerProvider());
     return $this;
   }
 

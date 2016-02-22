@@ -12,7 +12,7 @@ class ApplicationTest extends WebTestCase
     $app->error(function(\Exception $e, $code) use($app) {
       return $app->json(['error' => $e->getMessage()], $code);
     });
-    return $app->loadAll();
+    return $app->load();
   }
 
   private function _testRequest($method, $url, array $headers = [], $body = '')
