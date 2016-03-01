@@ -37,7 +37,9 @@ class PostsControllerProvider implements ControllerProviderInterface
       '/post/{id}',
       function (Application $app, $id) {
         $em = $app->getDb()->getEntityManager();
+
         $post = $em->getRepository('IhswEntity\Post')->find($id);
+
         return $app->getSerializer()->serialize($post, 'json');
       }
     );
@@ -45,9 +47,11 @@ class PostsControllerProvider implements ControllerProviderInterface
       '/post/{id}',
       function (Application $app, $id) {
         $em = $app->getDb()->getEntityManager();
+
         $post = $em->getRepository('IhswEntity\Post')->find($id);
         $em->remove($post);
         $em->flush();
+
         return $app->json([]);
       }
     );
