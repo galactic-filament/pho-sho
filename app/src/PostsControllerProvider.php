@@ -2,7 +2,8 @@
 
 use Silex\Application as SilexApplication,
   Silex\ControllerProviderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request,
+  Symfony\Component\HttpFoundation\Response;
 use Ihsw\Application;
 use IhswEntity\Post;
 
@@ -63,7 +64,11 @@ class PostsControllerProvider implements ControllerProviderInterface
         $em->persist($post);
         $em->flush();
 
-        return $app->getSerializer()->serialize($post, 'json');
+        return new Response(
+          $app->getSerializer()->serialize($post, 'json'),
+          Response::HTTP_OK,
+          ['content-type' => 'application/json']
+        );
       }
     );
 
