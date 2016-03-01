@@ -23,6 +23,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         // misc
         $em = $app->getDb()->getEntityManager();
 
+        // creating a new post
         $post = new Post();
         $post->setBody($req['body']);
         $em->persist($post);
@@ -36,8 +37,10 @@ class PostsControllerProvider implements ControllerProviderInterface
     $controllers->get(
       '/post/{id}',
       function (Application $app, $id) {
+        // misc
         $em = $app->getDb()->getEntityManager();
 
+        // fetching a post
         $post = $em->getRepository('IhswEntity\Post')->find($id);
 
         return $app->getSerializer()->serialize($post, 'json');
@@ -46,8 +49,10 @@ class PostsControllerProvider implements ControllerProviderInterface
     $controllers->delete(
       '/post/{id}',
       function (Application $app, $id) {
+        // misc
         $em = $app->getDb()->getEntityManager();
 
+        // removing a post
         $post = $em->getRepository('IhswEntity\Post')->find($id);
         $em->remove($post);
         $em->flush();
@@ -63,6 +68,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         // misc
         $em = $app->getDb()->getEntityManager();
 
+        // updating a post
         $post = $em->getRepository('IhswEntity\Post')->find($id);
         $post->setBody($req['body']);
         $em->persist($post);
