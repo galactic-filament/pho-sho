@@ -18,6 +18,7 @@ RUN curl -sS https://getcomposer.org/installer \
 
 COPY ./app /srv/app
 WORKDIR /srv/app
-RUN composer install
+RUN composer config -g github-oauth.github.com 9ab3e221b5267e45a22f9ab3067df8076653e094 \
+  && composer install
 
 CMD ["php", "-S", "0.0.0.0:80", "-t", "web", "web/index.php"]
