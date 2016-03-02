@@ -14,10 +14,10 @@ class DefaultControllerProvider implements ControllerProviderInterface
 
     // route definitions
     $controllers->get('/', function (Application $app) {
-      return 'Hello, world!';
+      return $app->plain('Hello, world!');
     });
     $controllers->get('/ping', function (Application $app) {
-      return 'Pong';
+      return $app->plain('Pong');
     });
     $controllers->post(
       '/reflection',

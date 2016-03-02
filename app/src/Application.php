@@ -1,7 +1,8 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request,
+  Symfony\Component\HttpFoundation\Response;
 use Monolog\Logger,
   Monolog\Handler\StreamHandler;
 use Ihsw\DefaultControllerProvider,
@@ -45,6 +46,10 @@ class Application extends SilexApplication
     $this->mount('/', new PostsControllerProvider());
 
     return $this;
+  }
+
+  public function plain($body, $status = Response::HTTP_OK) {
+    return new Response($body, $status, ['Content-type' => 'text/plain']);
   }
 
   public function getDb()
