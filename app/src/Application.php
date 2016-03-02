@@ -2,7 +2,6 @@
 
 use Silex\Application as SilexApplication;
 use Symfony\Component\HttpFoundation\Request;
-use JMS\Serializer\SerializerBuilder;
 use Monolog\Logger,
   Monolog\Handler\StreamHandler;
 use Ihsw\DefaultControllerProvider,
@@ -71,16 +70,6 @@ class Application extends SilexApplication
         ]
     ]);
     return $this->db;
-  }
-
-  public function getSerializer()
-  {
-    if (!is_null($this->serializer)) {
-      return $this->serializer;
-    }
-
-    $this->serializer = SerializerBuilder::create()->build();
-    return $this->serializer;
   }
 
   public function getLogger()

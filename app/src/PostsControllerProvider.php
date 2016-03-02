@@ -43,7 +43,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         // fetching a post
         $post = $em->getRepository('Ihsw\Entity\Post')->find($id);
 
-        return $app->getSerializer()->serialize($post, 'json');
+        return $app->json($post);
       }
     );
     $controllers->delete(
@@ -74,11 +74,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         $em->persist($post);
         $em->flush();
 
-        return new Response(
-          $app->getSerializer()->serialize($post, 'json'),
-          Response::HTTP_OK,
-          ['content-type' => 'application/json']
-        );
+        return $app->json($post);
       }
     );
 

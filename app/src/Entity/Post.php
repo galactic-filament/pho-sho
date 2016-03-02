@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="Post")
  */
-class Post
+class Post implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -21,4 +21,12 @@ class Post
      * @var string
      */
     public $body;
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'body' => $this->body
+        ];
+    }
 }
