@@ -4,8 +4,8 @@ use Silex\Application as SilexApplication,
   Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request,
   Symfony\Component\HttpFoundation\Response;
-use Ihsw\Application;
-use IhswEntity\Post;
+use Ihsw\Application,
+  Ihsw\Entity\Post;
 
 class PostsControllerProvider implements ControllerProviderInterface
 {
@@ -25,12 +25,12 @@ class PostsControllerProvider implements ControllerProviderInterface
 
         // creating a new post
         $post = new Post();
-        $post->setBody($req['body']);
+        $post->body = $req['body'];
         $em->persist($post);
         $em->flush();
 
         return $app->json([
-          'id' => $post->getId()
+          'id' => $post->id
         ]);
       }
     );
@@ -41,7 +41,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         $em = $app->getDb()->getEntityManager();
 
         // fetching a post
-        $post = $em->getRepository('IhswEntity\Post')->find($id);
+        $post = $em->getRepository('Ihsw\Entity\Post')->find($id);
 
         return $app->getSerializer()->serialize($post, 'json');
       }
@@ -53,7 +53,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         $em = $app->getDb()->getEntityManager();
 
         // removing a post
-        $post = $em->getRepository('IhswEntity\Post')->find($id);
+        $post = $em->getRepository('Ihsw\Entity\Post')->find($id);
         $em->remove($post);
         $em->flush();
 
@@ -69,8 +69,8 @@ class PostsControllerProvider implements ControllerProviderInterface
         $em = $app->getDb()->getEntityManager();
 
         // updating a post
-        $post = $em->getRepository('IhswEntity\Post')->find($id);
-        $post->setBody($req['body']);
+        $post = $em->getRepository('Ihsw\Entity\Post')->find($id);
+        $post->body = $req['body'];
         $em->persist($post);
         $em->flush();
 
