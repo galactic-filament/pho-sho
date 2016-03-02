@@ -1,12 +1,13 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Response;
 use Ihsw\Test\AbstractTestCase;
 
 class PostsTest extends AbstractTestCase
 {
   private function _createPost($body)
   {
-      list(, , $res) = $this->_testJson('POST', '/posts', $body);
+      list(, , $res) = $this->_testJson('POST', '/posts', $body, Response::HTTP_CREATED);
 
       $this->assertTrue(is_int($res['id']));
 

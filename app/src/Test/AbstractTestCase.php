@@ -1,6 +1,7 @@
 <?php namespace Ihsw\Test;
 
 use Silex\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 use Ihsw\Application;
 
 abstract class AbstractTestCase extends WebTestCase
@@ -15,24 +16,28 @@ abstract class AbstractTestCase extends WebTestCase
     return $app->load();
   }
 
-  protected function _testRequest($method, $url, array $headers = [], $body = '')
+  protected function _testRequest($method, $url, array $headers = [],
+    $body = '', $expectedStatus = Response::HTTP_OK)
   {
     $client = $this->createClient();
     $crawler = $client->request($method, $url, [], [], $headers, $body);
 
-    $this->assertTrue($client->getResponse()->isOk(), sprintf(
-      'Response is 200 OK: %s',
-      json_encode($client->getResponse()->getContent())
-    ));
+    $this->assertEquals(
+      $client->getResponse()->getStatusCode(),
+      $expectedStatus,
+      sprintf('Response is %s: %s', $expectedStatus,
+        json_encode($client->getResponse()->getContent()))
+    );
 
     return [$client, $crawler];
   }
 
-  protected function _testJson($method, $url, array $body = [])
+  protected function _testJson($method, $url, array $body = [],
+    $expectedStatus = Response::HTTP_OK)
   {
     list($client, $crawler) = $this->_testRequest($method, $url, [
       'CONTENT_TYPE' => 'application/json'
-    ], json_encode($body));
+    ], json_encode($body), $expectedStatus);
 
     $res = json_decode($client->getResponse()->getContent(), true);
     $this->assertNotEquals($res, null, 'Json decoding succeeds');
