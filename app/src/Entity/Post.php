@@ -4,7 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Post")
+ * @ORM\Table(name="Posts")
  */
 class Post implements \JsonSerializable
 {
