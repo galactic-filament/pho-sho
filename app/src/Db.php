@@ -11,8 +11,6 @@ class Db
 
   public function __construct(array $dbParams)
   {
-    $key = $_SERVER['ENV'] === 'travis' ? 'travis' : 'local';
-
     $paths = [sprintf('%s/Entity', __DIR__)];
 
     // creating an annotation metadata driver
@@ -23,7 +21,7 @@ class Db
     $config = Setup::createAnnotationMetadataConfiguration($paths, true);
     $config->setMetadataDriverImpl($driver);
 
-    $this->em = EntityManager::create($dbParams[$key], $config);
+    $this->em = EntityManager::create($dbParams, $config);
   }
 
   public function getEntityManager()

@@ -59,20 +59,11 @@ class Application extends SilexApplication
     }
 
     $this->db = new Db([
-      'travis' => [
-          'driver' => 'pdo_pgsql',
-          'host' => 'localhost',
-          'dbname' => 'postgres',
-          'user' => 'postgres',
-          'password' => ''
-        ],
-        'local' => [
-          'driver' => 'pdo_pgsql',
-          'host' => 'db',
-          'dbname' => 'postgres',
-          'user' => 'postgres',
-          'password' => ''
-        ]
+      'driver' => 'pdo_pgsql',
+      'host' => $_SERVER['DATABASE_HOST'],
+      'dbname' => 'postgres',
+      'user' => 'postgres',
+      'password' => ''
     ]);
     return $this->db;
   }
