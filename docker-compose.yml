@@ -4,12 +4,10 @@ db:
 base:
   image: ihsw/pho-sho
   environment:
-    - ENV=local
+    - DATABASE_HOST=Db
 test-base:
   extends:
     service: base
-  environment:
-    - DATABASE_HOST=Db
   command: ./bin/run-tests
 
 test:
