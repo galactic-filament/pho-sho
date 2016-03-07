@@ -60,7 +60,7 @@ class Application extends SilexApplication
 
     $this->db = new Db([
       'driver' => 'pdo_pgsql',
-      'host' => $_SERVER['DATABASE_HOST'],
+      'host' => getenv('DATABASE_HOST'),
       'dbname' => 'postgres',
       'user' => 'postgres',
       'password' => ''
