@@ -15,9 +15,7 @@ class PostsControllerProvider implements ControllerProviderInterface
     $controllers = $app['controllers_factory'];
 
     // route definitions
-    $controllers->post(
-      '/posts',
-      function (Application $app, Request $request) {
+    $controllers->post('/posts', function (Application $app, Request $request) {
         $req = $request->attributes->get('request-body');
 
         // misc
@@ -32,9 +30,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         return $app->json(['id' => $post->id], Response::HTTP_CREATED);
       }
     );
-    $controllers->get(
-      '/post/{id}',
-      function (Application $app, $id) {
+    $controllers->get('/post/{id}', function (Application $app, $id) {
         // misc
         $em = $app->getDb()->getEntityManager();
 
@@ -44,9 +40,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         return $app->json($post);
       }
     );
-    $controllers->delete(
-      '/post/{id}',
-      function (Application $app, $id) {
+    $controllers->delete('/post/{id}', function (Application $app, $id) {
         // misc
         $em = $app->getDb()->getEntityManager();
 
@@ -58,9 +52,7 @@ class PostsControllerProvider implements ControllerProviderInterface
         return $app->json([]);
       }
     );
-    $controllers->put(
-      '/post/{id}',
-      function (Application $app, Request $request, $id) {
+    $controllers->put('/post/{id}', function (Application $app, Request $request, $id) {
         $req = $request->attributes->get('request-body');
 
         // misc
