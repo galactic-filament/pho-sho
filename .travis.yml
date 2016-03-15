@@ -1,15 +1,22 @@
 sudo: false
 language: php
 php:
-  - 5.5
-  - 5.6
-  - 7
+- 5.5
+- 5.6
+- 7
 services:
-  - postgresql
+- postgresql
 
 env:
+  matrix:
   - DATABASE_HOST=localhost
+  global:
+  - secure: FTdiE55CBB0L50kYda4hNnAj6TaFAU2OUaLGuAV1ZYAxV7O20InwdShr9f2aXq2c+nCdY46tpWcCtky5SFiR2uijIYV0fUuAOLbRmwW4T9hytNeZF34/+8/+VKdTm5cwsMAsBFMZkd7R++At/TV/Yqvkt5Rf0yTGXxMzIQ+M/2MSIOFqYLW8Ml0J/YCNSqnPQHmPeyXpmFwoFxQcb4KceM11wjcofrtA8VHSN636XSV4vPZ9LuSFGoFqsrVv5QkucBxS/Ul48oKavidvlu5Unb1g5P/MI6JXgsEfE552cOwNR3vUd1JXGzspylZTWs7kCUJbRO0csxZJLGqLsmYsDiEQ2SWZn9ZcuJ+W1Qk0IZMQJvUm79mklHSc6IaSextlkoLXwRsJL7srEpz1YUWuAPQD0bSOezhn54YP+nS/g70n/nmj1BhF6Jor9Wmscqj7pHf8XjCMoTDc1/3213m6NSHDePn6v5aThvPEybQx4r3wNYkFxC6KQuAo6k0W3Yp+kKuSWBVkO3Nq1569wLFThtsfdeNoM5IZqt2Rly9sh4Hz71PJoGxScmvDZC/pGcjqPGFRvSZGMIB2PSwldhkhJhmFiV9lYsXFHO24A/B6v4wjCHdpsU3ziRpgtOJ21XHTffMInKE9MsbHC4NDIdNp5vZ5iHQLD5pQ4URUISxiCXA=
+  - secure: UIf51gb71AUeYrKIJaQASoRnx1F/HXh7qVdVvua56xpcCoV041ZyuhFUU6zS8VNaUbNcjOzGWeRV0C7FQkh57JrwAiZNUsBpqwvw+RXYPvDSLBmcT/jAKY127/OLhuVn9HJWYCxfnu/2Ib8aF97qbWUrd/NGUkm/IV20pa0fHrkr+BLTz2r+IOV5p38Jp4KXwcJiCVvD4HsP4N4DxuGSYwTIMXmA23//BwpvYLXfwqi8EgMiofsc7Hb5/6aV8m5XY77O/mcaMOmGgFGZ6ani19fyghFJaOujAuBpJHi4ApXj3M7hxHoxb3yJCpE59HOFlWgIo27VDHkeEag774Ivpvo0w6Uf7l5p20JrmSH5iO6/to1FVG1/Aiep2xA6yRZTqcGnJ1dE5MDPb0eqxO4XLzX/FhoknbrMtb1+t+eOFKO1hPsN+b4oGyJPF0GauLOrcSzlyP4AAuJw4Q2e0KOXlbWQ17iY3rhTgDdzmNC7bN0WEd+v9zKD0Pcvd50GFqGVB9MA12UVfLeoCFfpiFZJf4ujKT522rP47XqdmCY+vvtw86xCogieyl3L4ZXMbKpY6CnG9eThHSeePRzzENISO9h95VdWAVUlNfg7K640lE1XpgMUvW9QhMCs1G3s+Hij+81gh8pCregPB79gU5KT25Q5YPwdRjoVXcrWT4UcgRg=
+  - secure: QezkGWhyfk5z4PlEGaFMjKN74zT+NLbxv9o9XWjyfg+c/BdQlF7tmISRlZ3qUJv9sva80rphpe8TK+vXgRmRufoXj1k1rvLiriHd/stuUUErMc3dNMqchnWHjMuZZJ48NWuBAClk4nIr5HlBlIy2ogYivJrRhmGaYdhim8Y6qx1Vle4g+eHTvWB5pft8XH6lOPsXP2xm7YtP05QlztgbBekuwLh66nRYnTVro7y7MEnz/ml21fyTnDeUU0vx8kqBC26hFeO8ViJEUAvnBAIvMCDDmDQLbcrwSEpfrv1s6P/kPu8jremriN/6icFS0GhPNRj+C2Y00mADIlUiaa6XXaIKMLU7gCvvYaOuQ/C+8g3YuuurNMBaBW0aLO2HJ8/JL3+rRML58geAEuxhbb/E32xCwMQsm6EOtwsXINSk4LJUjap/VMyH0z9Tuigmd6bTg1KO/GXjtE+UTazyNQTN8JEuVx+EAG9xjeBec7rG7V0jX/fW+l3NABOWV4IhJaM8qBX4X1JiY50lO1c28fprB7IRCoTMeun20y0eqEUDddrsihFUsD5+3ltTneVRrjek+CaVcvvaRgAOcNJQvrAAqX19t7DSFxOF6sVqZXnG3gvWA97uEjoaFsAsGY8NZWsPUNDysvjv02P6lhZiMSeAVge9sdSWrPhKhUMVbeKFSts=
 before_script:
-  - psql -f ./db/container-files/docker-entrypoint-initdb.d/db.sql -U postgres
-  - cd ./app
-  - composer install
+- psql -f ./db/container-files/docker-entrypoint-initdb.d/db.sql -U postgres
+- cd ./app
+- composer install
+after_success:
+- ../bin/docker-push ihsw/pho-sho
