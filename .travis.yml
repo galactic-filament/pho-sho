@@ -20,4 +20,4 @@ before_script:
 - cd ./app
 - composer install
 after_success:
-- ../bin/docker-push ihsw/pho-sho
+- test $TRAVIS_PHP_VERSION == "5.5" && ../bin/docker-push ihsw/pho-sho
