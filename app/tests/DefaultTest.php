@@ -19,11 +19,7 @@ class ApplicationTest extends AbstractTestCase
   public function testReflection()
   {
     $body = ['greeting' => 'Hello, world!'];
-    list(, , $res) = $this->_testJson(
-      'POST',
-      '/reflection',
-      $body
-    );
+    list(, , $res) = $this->_testJson('POST', '/reflection', $body);
 
     $this->assertEquals($body['greeting'], $res['greeting']);
   }

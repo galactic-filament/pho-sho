@@ -19,12 +19,9 @@ class DefaultControllerProvider implements ControllerProviderInterface
     $controllers->get('/ping', function (Application $app) {
       return $app->plain('Pong');
     });
-    $controllers->post(
-      '/reflection',
-      function (Application $app, Request $request) {
-        return $app->json($request->attributes->get('request-body'));
-      }
-    );
+    $controllers->post('/reflection', function (Application $app, Request $request) {
+      return $app->json($request->attributes->get('request-body'));
+    });
 
     return $controllers;
   }

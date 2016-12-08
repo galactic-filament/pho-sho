@@ -1,13 +1,10 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication;
-use Symfony\Component\HttpFoundation\Request,
-  Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Monolog\Logger,
   Monolog\Handler\StreamHandler;
-use Ihsw\DefaultControllerProvider,
-  Ihsw\PostsControllerProvider,
-  Ihsw\Db;
+use Ihsw\{DefaultControllerProvider, PostsControllerProvider, Db};
 
 class Application extends SilexApplication
 {

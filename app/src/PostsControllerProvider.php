@@ -2,8 +2,7 @@
 
 use Silex\Application as SilexApplication,
   Silex\ControllerProviderInterface;
-use Symfony\Component\HttpFoundation\Request,
-  Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Ihsw\Application,
   Ihsw\Entity\Post;
 
