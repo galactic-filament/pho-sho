@@ -75,7 +75,7 @@ class Application extends SilexApplication
     }
 
     $logger = new Logger('pho-sho');
-    $logger->pushHandler(new StreamHandler('php://stdout', Logger::INFO));
+    $logger->pushHandler(new StreamHandler(sprintf('%s/log/app.log', getcwd())));
     $this->logger = $logger;
     return $this->logger;
   }
