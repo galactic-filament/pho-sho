@@ -8,7 +8,6 @@ class PostsTest extends AbstractTestCase
   private function _createPost($body)
   {
       list(, , $res) = $this->_testJson('POST', '/posts', $body, Response::HTTP_CREATED);
-
       $this->assertTrue(is_int($res['id']));
 
       return $res;
@@ -23,11 +22,8 @@ class PostsTest extends AbstractTestCase
   {
     $createBody = ['body' => 'Hello, world!'];
     $post = $this->_createPost($createBody);
-    list(, , $getBody) = $this->_testJson(
-      'GET',
-      sprintf('/post/%s', $post['id'])
-    );
 
+    list(, , $getBody) = $this->_testJson('GET', sprintf('/post/%s', $post['id']));
     $this->assertEquals($createBody['body'], $getBody['body']);
   }
 
