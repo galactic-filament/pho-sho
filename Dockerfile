@@ -19,14 +19,12 @@ RUN curl -sS https://getcomposer.org/installer \
 
 # add app dir
 ENV APP_DIR /srv/app
-RUN mkdir $APP_DIR
 COPY ./app $APP_DIR
 WORKDIR $APP_DIR
 
 # add log dir
 ENV APP_LOG_DIR /srv/app/log
 VOLUME $APP_LOG_DIR
-RUN mkdir -p $APP_LOG_DIR
 
 # install deps
 RUN composer config -g github-oauth.github.com 9ab3e221b5267e45a22f9ab3067df8076653e094 \
