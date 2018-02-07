@@ -21,4 +21,4 @@ before_script:
 - mkdir $APP_LOG_DIR
 script: ./bin/run-tests
 after_success:
-- test $TRAVIS_PHP_VERSION == "7.1" && git clean -xfd && ../bin/docker-push ihsw/pho-sho
+- git clean -xfd && ../bin/docker-push ihsw/pho-sho
