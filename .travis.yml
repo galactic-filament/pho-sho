@@ -18,7 +18,7 @@ before_script:
 - psql -f ./db/container-files/docker-entrypoint-initdb.d/db.sql -U postgres
 - cd ./app
 - composer install
-- mkdir $APP_LOG_DIR
+- mkdir -p $APP_LOG_DIR
 script: ./bin/run-tests
 after_success:
 - git clean -xfd && ../bin/docker-push ihsw/pho-sho
