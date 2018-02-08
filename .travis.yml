@@ -19,6 +19,9 @@ before_script:
 - cd ./app
 - composer install
 - mkdir -p $APP_LOG_DIR
-script: ./bin/run-tests
+script:
+- composer lint
+- composer test
+- composer coveralls
 after_success:
 - git clean -xfd && ../bin/docker-push ihsw/pho-sho

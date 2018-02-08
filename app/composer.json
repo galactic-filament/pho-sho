@@ -1,5 +1,6 @@
 {
     "name": "ihsw/pho-sho",
+    "description": "PHP (Silex) Generic API Testbed ",
     "authors": [
         {
             "name": "Adrian Parker",
@@ -16,6 +17,14 @@
     },
     "require-dev": {
         "symfony/browser-kit": "^2.7",
-        "symfony/css-selector": "^2.7"
+        "symfony/css-selector": "^2.7",
+        "phpunit/phpunit": "^7",
+        "squizlabs/php_codesniffer": "^3.2",
+        "php-coveralls/php-coveralls": "^2.0"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests",
+		"lint": "./vendor/bin/phpcs --standard=PSR2 --ignore=*/vendor/*,*/_reports/*,*/_docs/* ./",
+        "coveralls": "./vendor/bin/php-coveralls --coverage_clover=./_reports/clover.xml --json_path=./_reports/coveralls-upload.json"
     }
 }
