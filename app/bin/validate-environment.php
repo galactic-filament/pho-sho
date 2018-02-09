@@ -1,14 +1,4 @@
 <?php
-/**
- * Script for validating the environment
- * PHP Version 7.1
- * 
- * @category Initialization_Files
- * @package  Ihsw
- * @author   Adrian Parker <ihsw.aparker@gmail.com>
- * @license  MIT License
- * @link     https://ihsw.github.io
- */
 
 // suppressing warnings (because fsockopen will also dump garbage on fail)
 error_reporting(E_ALL ^ E_WARNING);
@@ -19,21 +9,12 @@ $envVarNames = [
     'APP_LOG_DIR',
     'DATABASE_HOST'
 ];
-$envVars = array_combine(
-    $envVarNames,
-    array_map(
-        function ($name) {
-            return getenv($name);
-        },
-        $envVarNames
-    )
-);
-$missingEnvVars = array_filter(
-    $envVars,
-    function ($value) {
-        return $value === false || strlen($value) === 0;
-    }
-);
+$envVars = array_combine($envVarNames, array_map(function ($name) {
+    return getenv($name);
+}, $envVarNames));
+$missingEnvVars = array_filter($envVars, function ($value) {
+    return $value === false || strlen($value) === 0;
+});
 
 if (count($missingEnvVars) > 0) {
     foreach ($missingEnvVars as $name => $value) {
