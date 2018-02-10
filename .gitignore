@@ -1,3 +1,4 @@
 app/vendor
 composer.lock
 app/log
+app/_reports

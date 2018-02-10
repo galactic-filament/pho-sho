@@ -6,7 +6,9 @@ ENV APP_PORT 80
 # php
 RUN apt-get update -q \
   && apt-get install -yq wget git zlib1g-dev libpq-dev \
-  && docker-php-ext-install zip pdo_pgsql
+  && pecl install xdebug \
+  && docker-php-ext-install zip pdo_pgsql \
+  && docker-php-ext-enable xdebug
 
 # composer
 RUN curl -sS https://getcomposer.org/installer \
