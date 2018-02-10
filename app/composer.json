@@ -24,7 +24,7 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests",
-		"lint": "./vendor/bin/phpcs -s --standard=PSR2 --ignore=*/vendor/*,*/_reports/*,*/_docs/* ./",
+		"lint": "./vendor/bin/phpcs -s --standard=PSR2 --exclude=PSR1.Classes.ClassDeclaration --ignore=*/vendor/*,*/_reports/*,*/_docs/* ./",
         "coveralls": "./vendor/bin/php-coveralls --coverage_clover=./_reports/clover.xml --json_path=./_reports/coveralls-upload.json"
     }
 }
