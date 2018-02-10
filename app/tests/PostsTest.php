@@ -1,5 +1,7 @@
 <?php
 
+namespace Ihsw;
+
 use Symfony\Component\HttpFoundation\Response;
 use Ihsw\Test\AbstractTestCase;
 
@@ -7,7 +9,7 @@ class PostsTest extends AbstractTestCase
 {
     private function createTestPost($body)
     {
-        list(, , $res) = $this->_testJson('POST', '/posts', $body, Response::HTTP_CREATED);
+        list(, , $res) = $this->generateTestJsonRequest('POST', '/posts', $body, Response::HTTP_CREATED);
         $this->assertTrue(is_int($res['id']));
 
         return $res;
@@ -23,7 +25,7 @@ class PostsTest extends AbstractTestCase
         $createBody = ['body' => 'Hello, world!'];
         $post = $this->createTestPost($createBody);
 
-        list(, , $getBody) = $this->_testJson('GET', sprintf('/post/%s', $post['id']));
+        list(, , $getBody) = $this->generateTestJsonRequest('GET', sprintf('/post/%s', $post['id']));
         $this->assertEquals($createBody['body'], $getBody['body']);
     }
 
@@ -31,7 +33,7 @@ class PostsTest extends AbstractTestCase
     {
         $createBody = ['body' => 'Hello, world!'];
         $post = $this->createTestPost($createBody);
-        $this->_testJson('DELETE', sprintf('/post/%s', $post['id']));
+        $this->generateTestJsonRequest('DELETE', sprintf('/post/%s', $post['id']));
     }
 
     public function testPutPost()
@@ -40,7 +42,7 @@ class PostsTest extends AbstractTestCase
         $post = $this->createTestPost($createBody);
 
         $requestBody = ['body' => 'Jello, world!'];
-        list(, , $responseBody) = $this->_testJson('PUT', sprintf('/post/%s', $post['id']), $requestBody);
+        list(, , $responseBody) = $this->generateTestJsonRequest('PUT', sprintf('/post/%s', $post['id']), $requestBody);
         $this->assertEquals($requestBody['body'], $responseBody['body']);
     }
 }
