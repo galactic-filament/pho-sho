@@ -1,6 +1,7 @@
 # pho-sho
 
 [![Build Status](https://travis-ci.org/galactic-filament/pho-sho.svg?branch=master)](https://travis-ci.org/galactic-filament/pho-sho)
+[![Coverage Status](https://coveralls.io/repos/github/galactic-filament/pho-sho/badge.svg?branch=master)](https://coveralls.io/github/galactic-filament/pho-sho?branch=master)
 
 ## Libraries
 
@@ -19,9 +20,9 @@ Test Coverage | NYI
 - [x] Database access
 - [x] Request logging to /srv/app/log/app.log
 - [x] Unit tests
-- [ ] Unit test coverage reporting
+- [x] Unit test coverage reporting
 - [x] Automated testing using TravisCI
-- [ ] Automated coverage reporting using Coveralls
+- [x] Automated coverage reporting using Coveralls
 - [ ] CRUD routes for user management
 - [ ] Password encryption using bcrypt
 - [ ] Routes protected via HTTP authentication
