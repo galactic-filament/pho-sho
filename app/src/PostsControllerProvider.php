@@ -1,7 +1,7 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication;
-use Silex\ControllerProviderInterface;
+use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Ihsw\Application;
