@@ -11,7 +11,7 @@ Web Framework | [Silex](https://silex.symfony.com/)
 SQL ORM | [Doctrine](http://www.doctrine-project.org/)
 Logging | [Monolog](https://github.com/Seldaek/monolog)
 Test Framework | [PhpUnit](https://phpunit.de/)
-Test Coverage | NYI
+Test Coverage | [PhpUnit](https://phpunit.de/)
 
 ## Features Implemented
 
