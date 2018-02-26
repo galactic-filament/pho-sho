@@ -23,5 +23,5 @@ script:
 - composer lint
 - composer test
 - composer coveralls
-after_success:
-- git clean -xfd && ../bin/docker-push ihsw/pho-sho
+- git clean -xfd && docker build -t ihsw/pho-sho ../
+- ../bin/docker-push ihsw/pho-sho
