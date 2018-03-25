@@ -7,11 +7,14 @@
 
 Kind | Name
 --- | ---
-Web Framework | [Silex](https://silex.symfony.com/)
+Web framework | [Silex](https://silex.symfony.com/)
 SQL ORM | [Doctrine](http://www.doctrine-project.org/)
 Logging | [Monolog](https://github.com/Seldaek/monolog)
-Test Framework | [PhpUnit](https://phpunit.de/)
-Test Coverage | [PhpUnit](https://phpunit.de/)
+Test framework | [PhpUnit](https://phpunit.de/)
+Test coverage | [PhpUnit](https://phpunit.de/)
+Password encryption | NYI
+User authentication | NYI
+Linting | [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
 
 ## Features Implemented
 
@@ -25,6 +28,14 @@ Test Coverage | [PhpUnit](https://phpunit.de/)
 - [x] Automated coverage reporting using Coveralls
 - [ ] CRUD routes for user management
 - [ ] Password encryption using bcrypt
+- [ ] Routes protected by cookie session
+- [ ] Entities linked to logged in user
 - [ ] Routes protected via HTTP authentication
+- [ ] Routes protected via API key
+- [x] Linting
+- [x] Logging to file
+- [ ] Logging to Logstash
 - [ ] Routes protected via ACLs
+- [ ] Migrations
+- [ ] GraphQL endpoint
 - [x] Validates environment (env vars, database host and port are accessible)
