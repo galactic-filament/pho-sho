@@ -8,20 +8,20 @@ class ApplicationTest extends AbstractTestCase
 {
     public function testHomepage()
     {
-        list($client,) = $this->generateTestRequest('GET', '/');
+        $client = $this->generateTestFunc()('GET', '/');
         $this->assertEquals('Hello, world!', $client->getResponse()->getContent());
     }
 
     public function testPing()
     {
-        list($client,) = $this->generateTestRequest('GET', '/ping');
+        $client = $this->generateTestFunc()('GET', '/ping');
         $this->assertEquals('Pong', $client->getResponse()->getContent());
     }
 
     public function testReflection()
     {
-        $body = ['greeting' => 'Hello, world!'];
-        list(, , $res) = $this->generateTestJsonRequest('POST', '/reflection', $body);
+        $client = $this->generateTestJsonFunc()('POST', '/reflection', json_encode(['greeting' => 'Hello, world!']));
+        $response = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertEquals($body['greeting'], $res['greeting']);
     }

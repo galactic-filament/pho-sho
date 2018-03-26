@@ -9,10 +9,11 @@ class PostsTest extends AbstractTestCase
 {
     private function createTestPost($body)
     {
-        list(, , $res) = $this->generateTestJsonRequest('POST', '/posts', $body, Response::HTTP_CREATED);
-        $this->assertTrue(is_int($res['id']));
+        $client = $this->generateTestJsonFunc()('POST', '/posts', json_encode($body), [], Response::HTTP_CREATED);
+        $postBody = json_decode($client->getResponse()->getContent(), true);
+        $this->assertTrue(is_int($postBody['id']));
 
-        return $res;
+        return $postBody;
     }
 
     public function testPosts()
@@ -23,26 +24,28 @@ class PostsTest extends AbstractTestCase
     public function testGetPost()
     {
         $createBody = ['body' => 'Hello, world!'];
-        $post = $this->createTestPost($createBody);
+        $postBody = $this->createTestPost($createBody);
 
-        list(, , $getBody) = $this->generateTestJsonRequest('GET', sprintf('/post/%s', $post['id']));
+        $client = $this->generateTestJsonFunc()('GET', sprintf('/post/%s', $postBody['id']));
+        $getBody = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($createBody['body'], $getBody['body']);
     }
 
     public function testDeletePost()
     {
         $createBody = ['body' => 'Hello, world!'];
-        $post = $this->createTestPost($createBody);
-        $this->generateTestJsonRequest('DELETE', sprintf('/post/%s', $post['id']));
+        $postBody = $this->createTestPost($createBody);
+        $this->generateTestJsonFunc()('DELETE', sprintf('/post/%s', $postBody['id']));
     }
 
     public function testPutPost()
     {
         $createBody = ['body' => 'Hello, world!'];
-        $post = $this->createTestPost($createBody);
+        $postBody = $this->createTestPost($createBody);
 
         $requestBody = ['body' => 'Jello, world!'];
-        list(, , $responseBody) = $this->generateTestJsonRequest('PUT', sprintf('/post/%s', $post['id']), $requestBody);
+        $client = $this->generateTestJsonFunc()('PUT', sprintf('/post/%s', $postBody['id']), json_encode($requestBody));
+        $responseBody = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($requestBody['body'], $responseBody['body']);
     }
 }

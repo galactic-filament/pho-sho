@@ -11,41 +11,44 @@ abstract class AbstractTestCase extends WebTestCase
         $app = new Application();
         $app['debug'] = true;
         $app->error(function (\Exception $e, $code) use ($app) {
-            return $app->json(['error' => $e->getMessage()], $code);
+            printf("error: %s\n", $e->getMessage());
+            return $app->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         });
         return $app->load();
     }
 
-    protected function generateTestRequest(
-        $method,
-        $url,
-        array $headers = [],
-        $body = '',
-        $expectedStatus = Response::HTTP_OK
-    ) {
-        $client = $this->createClient();
-        $crawler = $client->request($method, $url, [], [], $headers, $body);
-        $this->assertEquals(
-            $client->getResponse()->getStatusCode(),
-            $expectedStatus,
-            sprintf('Response is %s: %s', $expectedStatus, json_encode($client->getResponse()->getContent()))
-        );
-
-        return [$client, $crawler];
-    }
-
-    protected function generateTestJsonRequest($method, $url, array $body = [], $expectedStatus = Response::HTTP_OK)
+    protected function generateTestFunc($headerOptions = [], $expectedStatusOption = Response::HTTP_OK)
     {
-        list($client, $crawler) = $this->generateTestRequest(
+        return function (
             $method,
             $url,
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode($body),
-            $expectedStatus
-        );
-        $res = json_decode($client->getResponse()->getContent(), true);
-        $this->assertNotEquals($res, null, 'Json decoding succeeds');
+            $body = '',
+            $headers = [],
+            $expectedStatus = null
+        ) use (
+            $headerOptions,
+            $expectedStatusOption,
+            $client
+        ) {
+            $headers = array_merge($headers, $headerOptions);
 
-        return [$client, $crawler, $res];
+            if ($expectedStatus === null) {
+                $expectedStatus = $expectedStatusOption;
+            }
+
+            $client = $this->createClient();
+            $client->request($method, $url, [], [], $headers, $body);
+            $this->assertEquals($expectedStatus, $client->getResponse()->getStatusCode());
+
+            return $client;
+        };
+    }
+
+    protected function generateTestJsonFunc($headerOptions = [], $expectedStatusOption = Response::HTTP_OK)
+    {
+        return $this->generateTestFunc(
+            array_merge(['CONTENT_TYPE' => 'application/json'], $headerOptions),
+            $expectedStatusOption
+        );
     }
 }
