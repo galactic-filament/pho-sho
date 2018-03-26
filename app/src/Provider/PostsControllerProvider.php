@@ -1,4 +1,4 @@
-<?php namespace Ihsw;
+<?php namespace Ihsw\Provider;
 
 use Silex\Application as SilexApplication;
 use Silex\Api\ControllerProviderInterface;

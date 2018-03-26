@@ -1,13 +1,14 @@
 <?php namespace Ihsw;
 
 use Silex\Application as SilexApplication;
+use Silex\Provider\SecurityServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Ihsw\DefaultControllerProvider;
-use Ihsw\PostsControllerProvider;
 use Ihsw\Db;
+use Ihsw\Provider\DefaultControllerProvider;
+use Ihsw\Provider\PostsControllerProvider;
 
 class Application extends SilexApplication
 {
@@ -17,6 +18,15 @@ class Application extends SilexApplication
 
     public function load()
     {
+        // registering services
+        $this->register(new SecurityServiceProvider());
+        $this["security.firewalls"] = [
+            "login" => [
+                "pattern" => "^/login$",
+                "anonymous" => true
+            ]
+        ];
+
         // adding middlewares
         $this->before(function (Request $request) {
             if ($request->headers->get('Content-type') !== 'application/json') {
