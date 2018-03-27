@@ -20,9 +20,10 @@ class ApplicationTest extends AbstractTestCase
 
     public function testReflection()
     {
-        $client = $this->generateTestJsonFunc()('POST', '/reflection', json_encode(['greeting' => 'Hello, world!']));
-        $response = json_decode($client->getResponse()->getContent(), true);
+        $body = ['greeting' => 'Hello, world!'];
+        $client = $this->generateTestJsonFunc()('POST', '/reflection', json_encode($body));
+        $responseContent = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertEquals($body['greeting'], $res['greeting']);
+        $this->assertEquals($body['greeting'], $responseContent['greeting']);
     }
 }
