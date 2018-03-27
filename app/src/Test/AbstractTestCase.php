@@ -27,8 +27,7 @@ abstract class AbstractTestCase extends WebTestCase
             $expectedStatus = null
         ) use (
             $headerOptions,
-            $expectedStatusOption,
-            $client
+            $expectedStatusOption
         ) {
             $headers = array_merge($headers, $headerOptions);
 
