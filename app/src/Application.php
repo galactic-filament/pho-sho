@@ -9,6 +9,7 @@ use Monolog\Handler\StreamHandler;
 use Ihsw\Db;
 use Ihsw\Provider\DefaultControllerProvider;
 use Ihsw\Provider\PostsControllerProvider;
+use Ihsw\Provider\UsersControllerProvider;
 
 class Application extends SilexApplication
 {
@@ -54,6 +55,7 @@ class Application extends SilexApplication
         // loading routes
         $this->mount('/', new DefaultControllerProvider());
         $this->mount('/', new PostsControllerProvider());
+        $this->mount('/', new UsersControllerProvider());
 
         return $this;
     }
