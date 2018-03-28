@@ -28,10 +28,11 @@ Linting | [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
 - [x] Automated coverage reporting using Coveralls
 - [ ] CRUD routes for user management
 - [ ] Password encryption using bcrypt
-- [ ] Routes protected by cookie session
 - [ ] Entities linked to logged in user
+- [ ] Routes protected by cookie session
 - [ ] Routes protected via HTTP authentication
 - [ ] Routes protected via API key
+- [ ] Routes protected via JWT
 - [x] Linting
 - [x] Logging to file
 - [ ] Logging to Logstash
