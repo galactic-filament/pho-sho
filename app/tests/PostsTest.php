@@ -7,44 +7,55 @@ use Ihsw\Test\AbstractTestCase;
 
 class PostsTest extends AbstractTestCase
 {
-    private function createTestPost($body)
+    private function createTestPost()
     {
-        $client = $this->generateTestJsonFunc()('POST', '/posts', json_encode($body), [], Response::HTTP_CREATED);
-        $postBody = json_decode($client->getResponse()->getContent(), true);
-        $this->assertTrue(is_int($postBody['id']));
-
-        return $postBody;
+        $client = $this->requestJson(
+            'POST',
+            '/posts',
+            json_encode(['body' => 'Hello, world!']),
+            [],
+            Response::HTTP_CREATED
+        );
+        return json_decode($client->getResponse()->getContent(), true);
     }
 
-    public function testPosts()
+    public function testCreatePost()
     {
-        $this->createTestPost(['body' => 'Hello, world!']);
+        $client = $this->requestJson(
+            'POST',
+            '/posts',
+            json_encode(['body' => 'Hello, world!']),
+            [],
+            Response::HTTP_CREATED
+        );
+        $postBody = json_decode($client->getResponse()->getContent(), true);
+        $this->assertTrue(is_int($postBody['id']));
     }
 
     public function testGetPost()
     {
         $createBody = ['body' => 'Hello, world!'];
-        $postBody = $this->createTestPost($createBody);
+        $client = $this->requestJson('POST', '/posts', json_encode($createBody), [], Response::HTTP_CREATED);
+        $postBody = json_decode($client->getResponse()->getContent(), true);
 
-        $client = $this->generateTestJsonFunc()('GET', sprintf('/post/%s', $postBody['id']));
+        $client = $this->requestJson('GET', sprintf('/post/%s', $postBody['id']));
         $getBody = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($createBody['body'], $getBody['body']);
     }
 
     public function testDeletePost()
     {
-        $createBody = ['body' => 'Hello, world!'];
-        $postBody = $this->createTestPost($createBody);
-        $this->generateTestJsonFunc()('DELETE', sprintf('/post/%s', $postBody['id']));
+        $postBody = $this->createTestPost();
+        $client = $this->request('DELETE', sprintf('/post/%s', $postBody['id']));
+        $this->assertEquals($client->getResponse()->getStatusCode(), Response::HTTP_OK);
     }
 
     public function testPutPost()
     {
-        $createBody = ['body' => 'Hello, world!'];
-        $postBody = $this->createTestPost($createBody);
+        $postBody = $this->createTestPost();
 
         $requestBody = ['body' => 'Jello, world!'];
-        $client = $this->generateTestJsonFunc()('PUT', sprintf('/post/%s', $postBody['id']), json_encode($requestBody));
+        $client = $this->requestJson('PUT', sprintf('/post/%s', $postBody['id']), json_encode($requestBody));
         $responseBody = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($requestBody['body'], $responseBody['body']);
     }
