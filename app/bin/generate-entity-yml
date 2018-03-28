@@ -1,7 +1,0 @@
-#!/bin/bash
-
-php vendor/bin/doctrine orm:convert-mapping \
-  --from-database \
-  --namespace="IhswEntity\\" \
-  --force \
-  yml ./entity-src/models
