@@ -32,7 +32,7 @@ Linting | [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
 - [ ] Routes protected by cookie session
 - [ ] Routes protected via HTTP authentication
 - [ ] Routes protected via API key
-- [ ] Routes protected via JWT
+- [ ] [Routes protected via JWT](https://github.com/firebase/php-jwt)
 - [x] Linting
 - [x] Logging to file
 - [ ] Logging to Logstash
