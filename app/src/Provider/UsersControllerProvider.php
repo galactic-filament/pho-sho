@@ -42,6 +42,19 @@ class UsersControllerProvider implements ControllerProviderInterface
 
             return $app->json($user);
         });
+        $controllers->delete('/user/{id}', function (Application $app, $id) {
+            $em = $app->getDb()->getEntityManager();
+
+            $user = $em->getRepository('Ihsw\Entity\User')->find($id);
+            if (is_null($user)) {
+                return $app->json([], Response::HTTP_NOT_FOUND);
+            }
+
+            $em->remove($user);
+            $em->flush();
+
+            return $app->json([]);
+        });
 
         return $controllers;
     }

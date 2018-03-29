@@ -44,4 +44,12 @@ class UsersTest extends AbstractTestCase
         $response = $this->requestJson('GET', '/user/-1');
         $this->assertEquals($response->getStatusCode(), Response::HTTP_NOT_FOUND);
     }
+
+    public function testDeleteUser()
+    {
+        $user = $this->createTestUser(sprintf('delete-user+%s@example.com', Uuid::uuid4()));
+
+        $response = $this->requestJson('DELETE', sprintf('/user/%s', $user['id']));
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+    }
 }
