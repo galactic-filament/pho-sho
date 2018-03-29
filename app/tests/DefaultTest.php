@@ -21,7 +21,10 @@ class ApplicationTest extends AbstractTestCase
     public function testReflection()
     {
         $body = ['greeting' => 'Hello, world!'];
-        $responseContent = json_decode($this->requestJson('POST', '/reflection', json_encode($body))->getContent(), true);
+        $responseContent = json_decode(
+            $this->requestJson('POST', '/reflection', json_encode($body))->getContent(),
+            true
+        );
 
         $this->assertEquals($body['greeting'], $responseContent['greeting']);
     }
