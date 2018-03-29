@@ -52,4 +52,10 @@ class UsersTest extends AbstractTestCase
         $response = $this->requestJson('DELETE', sprintf('/user/%s', $user['id']));
         $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
     }
+
+    public function testDeleteUserNotFound()
+    {
+        $response = $this->requestJson('DELETE', '/user/-1');
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_NOT_FOUND);
+    }
 }
