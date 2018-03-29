@@ -26,8 +26,8 @@ Linting | [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
 - [x] Unit test coverage reporting
 - [x] Automated testing using TravisCI
 - [x] Automated coverage reporting using Coveralls
-- [ ] CRUD routes for user management
-- [ ] Password encryption using bcrypt
+- [x] CRUD routes for user management
+- [x] Password encryption using bcrypt
 - [ ] Entities linked to logged in user
 - [ ] Routes protected by cookie session
 - [ ] Routes protected via HTTP authentication
