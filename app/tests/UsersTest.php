@@ -10,14 +10,13 @@ class UsersTest extends AbstractTestCase
 {
     public function testCreateUser()
     {
-        $client = $this->requestJson(
+        $response = $this->requestJson(
             'POST',
             '/users',
-            json_encode(['email' => sprintf('create-user+%s@example.com', Uuid::uuid4()), 'password' => 'test']),
-            [],
-            Response::HTTP_CREATED
+            json_encode(['email' => sprintf('create-user+%s@example.com', Uuid::uuid4()), 'password' => 'test'])
         );
-        $userBody = json_decode($client->getResponse()->getContent(), true);
+
+        $userBody = json_decode($response->getContent(), true);
         $this->assertTrue(is_int($userBody['id']));
     }
 }

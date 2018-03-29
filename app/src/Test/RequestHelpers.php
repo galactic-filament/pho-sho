@@ -4,47 +4,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait RequestHelpers
 {
-    protected function generateTestFunc($headerOptions = [], $expectedStatusOption = Response::HTTP_OK)
+    protected function requestGenerator($headerOptions = [])
     {
-        return function (
-            $method,
-            $url,
-            $body = '',
-            $headers = [],
-            $expectedStatus = null
-        ) use (
-            $headerOptions,
-            $expectedStatusOption
-        ) {
+        return function ($method, $url, $body = '', $headers = []) use ($headerOptions) {
             $headers = array_merge($headers, $headerOptions);
-
-            if ($expectedStatus === null) {
-                $expectedStatus = $expectedStatusOption;
-            }
 
             $client = $this->createClient();
             $client->request($method, $url, [], [], $headers, $body);
-            $this->assertEquals($expectedStatus, $client->getResponse()->getStatusCode());
 
-            return $client;
+            return $client->getResponse();
         };
     }
 
-    protected function generateTestJsonFunc($headerOptions = [], $expectedStatusOption = Response::HTTP_OK)
+    protected function jsonRequestGenerator($headerOptions = [])
     {
-        return $this->generateTestFunc(
-            array_merge(['CONTENT_TYPE' => 'application/json'], $headerOptions),
-            $expectedStatusOption
-        );
+        return $this->requestGenerator(array_merge(['CONTENT_TYPE' => 'application/json'], $headerOptions));
     }
 
-    protected function request($method, $url, $body = '', $headers = [], $expectedStatus = null)
+    protected function request($method, $url, $body = '', $headers = [])
     {
-        return $this->generateTestFunc()($method, $url, $body, $headers, $expectedStatus);
+        return $this->requestGenerator()($method, $url, $body, $headers);
     }
 
-    protected function requestJson($method, $url, $body = '', $headers = [], $expectedStatus = null)
+    protected function requestJson($method, $url, $body = '', $headers = [])
     {
-        return $this->generateTestJsonFunc()($method, $url, $body, $headers, $expectedStatus);
+        return $this->jsonRequestGenerator()($method, $url, $body, $headers);
     }
 }

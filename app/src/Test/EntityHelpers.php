@@ -6,9 +6,11 @@ trait EntityHelpers
 {
     protected function requestPost($body)
     {
-        $client = $this->requestJson('POST', '/posts', json_encode($body), [], Response::HTTP_CREATED);
-        $postBody = json_decode($client->getResponse()->getContent(), true);
+        return $this->requestJson('POST', '/posts', json_encode($body));
+    }
 
-        return $postBody;
+    protected function requestUser($body)
+    {
+        return $this->requestJson('POST', '/users', json_encode($body));
     }
 }
