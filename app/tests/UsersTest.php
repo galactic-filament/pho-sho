@@ -3,6 +3,7 @@
 namespace Ihsw;
 
 use Symfony\Component\HttpFoundation\Response;
+use Ramsey\Uuid\Uuid;
 use Ihsw\Test\AbstractTestCase;
 
 class UsersTest extends AbstractTestCase
@@ -12,7 +13,7 @@ class UsersTest extends AbstractTestCase
         $client = $this->requestJson(
             'POST',
             '/users',
-            json_encode(['email' => 'test@test.test', 'password' => 'test']),
+            json_encode(['email' => sprintf('create-user+%s@example.com', Uuid::uuid4()), 'password' => 'test']),
             [],
             Response::HTTP_CREATED
         );

@@ -24,7 +24,7 @@ class UsersControllerProvider implements ControllerProviderInterface
             // creating a new post
             $user = new User();
             $user->email = $req['email'];
-            $user->hashedPassword = $req['password'];
+            $user->hashedPassword = password_hash($req['password'], PASSWORD_BCRYPT);
             $em->persist($user);
             $em->flush();
 
