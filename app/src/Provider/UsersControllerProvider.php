@@ -55,6 +55,21 @@ class UsersControllerProvider implements ControllerProviderInterface
 
             return $app->json([]);
         });
+        $controllers->put('/user/{id}', function (Application $app, Request $request, $id) {
+            $req = $request->attributes->get('request-body');
+            $em = $app->getDb()->getEntityManager();
+
+            $user = $em->getRepository('Ihsw\Entity\User')->find($id);
+            if (is_null($user)) {
+                return $app->json([], Response::HTTP_NOT_FOUND);
+            }
+
+            $user->email = $req['email'];
+            $em->persist($user);
+            $em->flush();
+
+            return $app->json($user);
+        });
 
         return $controllers;
     }

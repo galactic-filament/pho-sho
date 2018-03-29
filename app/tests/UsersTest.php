@@ -58,4 +58,21 @@ class UsersTest extends AbstractTestCase
         $response = $this->requestJson('DELETE', '/user/-1');
         $this->assertEquals($response->getStatusCode(), Response::HTTP_NOT_FOUND);
     }
+
+    public function testUpdateUser()
+    {
+        $user = $this->createTestUser(sprintf('update-user+%s@example.com', Uuid::uuid4()));
+
+        $newBody = ['email' => sprintf('update-user+%s@example.com', Uuid::uuid4())];
+        $response = $this->requestJson('PUT', sprintf('/user/%s', $user['id']), json_encode($newBody));
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+        $body = json_decode($response->getContent(), true);
+        $this->assertEquals($body['email'], $newBody['email']);
+    }
+
+    public function testUpdateUserNotFound()
+    {
+        $response = $this->requestJson('PUT', '/user/-1', json_encode([]));
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_NOT_FOUND);
+    }
 }
