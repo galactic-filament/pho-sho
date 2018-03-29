@@ -30,6 +30,15 @@ class UsersControllerProvider implements ControllerProviderInterface
 
             return $app->json($user, Response::HTTP_CREATED);
         });
+        $controllers->get('/user/{id}', function (Application $app, $id) {
+            // misc
+            $em = $app->getDb()->getEntityManager();
+
+            // fetching a user
+            $user = $em->getRepository('Ihsw\Entity\User')->find($id);
+
+            return $app->json($user);
+        });
 
         return $controllers;
     }
