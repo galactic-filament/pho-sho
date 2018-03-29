@@ -38,4 +38,10 @@ class UsersTest extends AbstractTestCase
         $response = $this->requestJson('GET', sprintf('/user/%s', $user['id']));
         $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
     }
+
+    public function testGetUserNotFound()
+    {
+        $response = $this->requestJson('GET', '/user/-1');
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_NOT_FOUND);
+    }
 }

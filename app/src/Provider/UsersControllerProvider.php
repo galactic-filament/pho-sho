@@ -36,6 +36,9 @@ class UsersControllerProvider implements ControllerProviderInterface
 
             // fetching a user
             $user = $em->getRepository('Ihsw\Entity\User')->find($id);
+            if (is_null($user)) {
+                return $app->json([], Response::HTTP_NOT_FOUND);
+            }
 
             return $app->json($user);
         });
