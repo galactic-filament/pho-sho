@@ -27,7 +27,7 @@ class PostsControllerProvider implements ControllerProviderInterface
             $em->persist($post);
             $em->flush();
 
-            return $app->json(['id' => $post->id], Response::HTTP_CREATED);
+            return $app->json($post, Response::HTTP_CREATED);
         });
         $controllers->get('/post/{id}', function (Application $app, $id) {
             // misc
